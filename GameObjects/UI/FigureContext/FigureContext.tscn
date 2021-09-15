@@ -1,0 +1,104 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://GameObjects/UI/FigureContext/FigureContext.gd" type="Script" id=1]
+
+[node name="FigureContext" type="MarginContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 10.0
+margin_top = 20.0
+margin_right = -10.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+margin_right = 620.0
+margin_bottom = 340.0
+
+[node name="Name" type="Label" parent="VBoxContainer"]
+margin_right = 620.0
+margin_bottom = 14.0
+text = "Heinrich"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Description" type="Label" parent="VBoxContainer"]
+margin_top = 18.0
+margin_right = 620.0
+margin_bottom = 32.0
+text = "An ugly humanoid"
+autowrap = true
+
+[node name="stats" type="VBoxContainer" parent="VBoxContainer"]
+margin_top = 36.0
+margin_right = 620.0
+margin_bottom = 176.0
+
+[node name="HealthLabel" type="Label" parent="VBoxContainer/stats"]
+margin_right = 620.0
+margin_bottom = 14.0
+text = "Health"
+
+[node name="HealthBar" type="ProgressBar" parent="VBoxContainer/stats"]
+margin_top = 18.0
+margin_right = 620.0
+margin_bottom = 32.0
+value = 100.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HungerLabel" type="Label" parent="VBoxContainer/stats"]
+margin_top = 36.0
+margin_right = 620.0
+margin_bottom = 50.0
+text = "Hunger"
+
+[node name="HungerBar" type="ProgressBar" parent="VBoxContainer/stats"]
+margin_top = 54.0
+margin_right = 620.0
+margin_bottom = 68.0
+value = 100.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ThurstLabel" type="Label" parent="VBoxContainer/stats"]
+margin_top = 72.0
+margin_right = 620.0
+margin_bottom = 86.0
+text = "Thurst"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ThurstBar" type="ProgressBar" parent="VBoxContainer/stats"]
+margin_top = 90.0
+margin_right = 620.0
+margin_bottom = 104.0
+value = 100.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="EnergyLabel" type="Label" parent="VBoxContainer/stats"]
+margin_top = 108.0
+margin_right = 620.0
+margin_bottom = 122.0
+text = "Energy"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Energybar" type="ProgressBar" parent="VBoxContainer/stats"]
+margin_top = 126.0
+margin_right = 620.0
+margin_bottom = 140.0
+value = 100.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
