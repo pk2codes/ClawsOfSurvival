@@ -1,10 +1,11 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://GameObjects/Figures/Peasent/Peasent.png" type="Texture" id=1]
 [ext_resource path="res://GameObjects/Figures/Peasent/Peasent.gd" type="Script" id=2]
 [ext_resource path="res://GameObjects/Tech/Selectable/Selectable.tscn" type="PackedScene" id=3]
 [ext_resource path="res://GameObjects/Tech/Movable/Movable.tscn" type="PackedScene" id=4]
 [ext_resource path="res://GameObjects/Figures/Status/Status.tscn" type="PackedScene" id=5]
+[ext_resource path="res://GameObjects/Tech/Figures/Mind/Mind.tscn" type="PackedScene" id=6]
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 12.5726
@@ -45,10 +46,8 @@ tracks/0/keys = {
 [node name="Peasent" type="Node2D"]
 script = ExtResource( 2 )
 
-[node name="Status" parent="." instance=ExtResource( 5 )]
-position = Vector2( 9.92126, -15.874 )
-
 [node name="KinematicBody2D" type="KinematicBody2D" parent="."]
+position = Vector2( 0, -11.2246 )
 
 [node name="Sprite" type="Sprite" parent="KinematicBody2D"]
 position = Vector2( 0.420448, 0 )
@@ -63,5 +62,14 @@ anims/Alive = SubResource( 2 )
 anims/Dead = SubResource( 3 )
 
 [node name="Movable" parent="." instance=ExtResource( 4 )]
+position = Vector2( 0, -11.2246 )
 
 [node name="Selectable" parent="." instance=ExtResource( 3 )]
+position = Vector2( 0, -11.2246 )
+
+[node name="Mind" parent="." instance=ExtResource( 6 )]
+
+[node name="Status" parent="Mind" instance=ExtResource( 5 )]
+position = Vector2( 9.92126, -27.0986 )
+
+[connection signal="new_target" from="Mind" to="." method="_on_Mind_new_target"]

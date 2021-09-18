@@ -4,8 +4,8 @@ onready var character_select_box = $CharacterSelectBox
 onready var area = $Area2D
 onready var animation_player = $KinematicBody2D/AnimationPlayer
 onready var movable = $Movable
-onready var status = $Status
 onready var selectable = $Selectable
+onready var mind = $Mind
 
 signal on_update_stats
 
@@ -24,12 +24,6 @@ var info = {
 	}
 }
 
-var needs = {
-	"hungry": false,
-	"thursty": false,
-	"tired": false
-}
-
 enum STATE {
 	ALIVE, DEAD
 }
@@ -41,46 +35,29 @@ func _ready():
 	self.state = STATE.ALIVE 
 	movable.character = self
 	movable.speed = self.info["stats"]["speed"]
-func _show_needs(): 
-	for need in self.needs:
-		if needs["thursty"]:
-			status.show_thursty()
-		elif needs["hungry"]:
-			status.show_hungry()
-		elif needs["tired"]:
-			status.show_tired()
-		else:
-			status.hide_all()
+	
+
 			
 func _handle_animation():
 	if self.state == STATE.DEAD:
 		animation_player.play("Dead")
-		status.hide_all()
-	_show_needs()
 	
 
 func _update_state():
 	if self.info["stats"]["hunger"] <= 0:
 		self.state = STATE.DEAD
 
-func _update_status():
-	if self.info["stats"]["hunger"] < 50:
-		needs["hungry"] = true
-	if self.info["stats"]["thurst"] < 40:
-		needs["thurst"] = true
-	if self.info["stats"]["energy"] < 20:
-		needs["tired"] = true
 
-var update_interval = 2
+var update_interval = 1
 
 func _update_needs(delta):
-	self.info["stats"]["hunger"] -= (delta / 30 )
+	self.info["stats"]["hunger"] -= (delta * 3)
 	self.info["stats"]["thurst"] -= (delta / 10 )
 	self.info["stats"]["energy"] -= (delta / 90 )
 	if update_interval <= 0:
 		emit_signal("on_update_stats", info)
 		update_interval = 2
-		_update_status()
+		mind.think(self.info["stats"])
 	else: 
 		update_interval = update_interval - delta
 	
@@ -95,3 +72,7 @@ func set_position(pos):
 		self.position = pos
 
 
+
+
+func _on_Mind_new_target(target):
+	movable.move_to_pos(target)

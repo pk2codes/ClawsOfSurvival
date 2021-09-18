@@ -11,13 +11,6 @@ var character
 func _ready():
 	pass
 
-func move_to_pos():
-	if character == null:
-		print("ERR: Need character assigned to move")
-	
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
 var path = []
 
 func _process(delta):
@@ -32,7 +25,10 @@ func _unhandled_input(event):
 		return
 	if character.selectable.is_selected:
 		var pos = character.transform.xform(get_local_mouse_position())
-		_update_navigation_path(transform.xform(character.position), pos)
+		move_to_pos(pos)
+
+func move_to_pos(global_pos):
+	_update_navigation_path(transform.xform(character.position), global_pos)
 
 func move_along_path(distance):
 	var last_point = character.position

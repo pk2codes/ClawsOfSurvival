@@ -11,7 +11,6 @@ func _ready():
 	self.visible = false
 	var selectables = get_tree().get_nodes_in_group("Selectable")
 	for s in selectables:
-		print("ready", s.name)
 		s.connect("on_select", self, "_on_selection")
 		s.connect("on_unselect", self, "_on_unselection")
 

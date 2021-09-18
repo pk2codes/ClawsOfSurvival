@@ -16,18 +16,15 @@ func _ready():
 #	pass
 
 func update_stats(info):
-	print("update stats")
 	var name = info["name"]
 	var description = info["description"]
 	name_label.text = name
 	description_label.text = description
 	
 	if !info.has("stats"):
-		print("no stats")
 		stats.visible = false
 	else:
 		stats.visible = true
-		print("show stats", info)
 		var stats = info["stats"]
 		var health = stats["health"]
 		var thurst = stats["thurst"]
