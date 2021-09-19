@@ -9,16 +9,17 @@ var visible_info
 func _ready():
 	self.visible_info = null
 	self.visible = false
-	var selectables = get_tree().get_nodes_in_group("Selectable")
-	for s in selectables:
-		s.connect("on_select", self, "_on_selection")
-		s.connect("on_unselect", self, "_on_unselection")
+	_update_selectables()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
 #	pass
 
-
+func _update_selectables():
+	var selectables = get_tree().get_nodes_in_group("Selectable")
+	for s in selectables:
+		s.connect("on_select", self, "_on_selection")
+		s.connect("on_unselect", self, "_on_unselection")
 
 
 
@@ -39,3 +40,7 @@ func _on_Peasent_on_update_stats(info):
 	else :
 		if visible_info == info["id"]:
 			figure_context.update_stats(info)
+
+
+func _on_Editor_on_change():
+	_update_selectables()

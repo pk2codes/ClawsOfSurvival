@@ -1,0 +1,28 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://GameObjects/Tech/Selectable/Selectable.tscn" type="PackedScene" id=2]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends Node2D
+onready var selectable = $Selectable
+
+
+var info = {
+	\"name\": \"BaseItem\",
+	\"description\": \"A generic pattern\"
+}
+func _ready():
+	pass
+	
+func set_info(new_info):
+	self.info = new_info
+"
+
+[node name="BaseItem" type="Node2D"]
+script = SubResource( 1 )
+
+[node name="TextureRect" type="Sprite" parent="."]
+
+[node name="Selectable" parent="." instance=ExtResource( 2 )]
+
+[editable path="Selectable"]

@@ -7,7 +7,7 @@
 [ext_resource path="res://GameObjects/Landscape/Grass/GrassBase.png" type="Texture" id=5]
 [ext_resource path="res://GameObjects/Items/Chest.png" type="Texture" id=6]
 [ext_resource path="res://GameObjects/UI/ContextMenu/ContextMenu.tscn" type="PackedScene" id=7]
-[ext_resource path="res://GameObjects/Items/Food/Waterbag/Waterbag.tscn" type="PackedScene" id=8]
+[ext_resource path="res://GameObjects/UI/Editor/Editor.tscn" type="PackedScene" id=9]
 
 [sub_resource type="TileSet" id=1]
 0/name = "CliffTileset.png 0"
@@ -122,9 +122,6 @@ cell_size = Vector2( 32, 32 )
 format = 1
 tile_data = PoolIntArray( 131075, 0, 0, 131076, 0, 0, 131077, 0, 0, 131078, 0, 0, 131079, 0, 0, 131080, 0, 0, 131081, 0, 0, 131082, 0, 0, 196611, 0, 0, 196618, 0, 0, 262147, 0, 0, 262154, 0, 0, 327683, 0, 0, 327690, 0, 0, 393219, 0, 0, 393226, 0, 0, 458755, 0, 0, 458756, 0, 0, 458757, 0, 0, 458758, 0, 0, 458760, 0, 0, 458761, 0, 0, 458762, 0, 0 )
 
-[node name="Waterbag" parent="Navigation/YSort" instance=ExtResource( 8 )]
-position = Vector2( 61.8847, 144.719 )
-
 [node name="Peasent" parent="Navigation/YSort" instance=ExtResource( 3 )]
 position = Vector2( 63.0712, 50.7239 )
 
@@ -141,4 +138,7 @@ __meta__ = {
 [node name="ContextMenu" parent="Navigation/Control" instance=ExtResource( 7 )]
 margin_left = -162.0
 
+[node name="Editor" parent="." instance=ExtResource( 9 )]
+
 [connection signal="on_update_stats" from="Navigation/YSort/Peasent" to="Navigation/Control/ContextMenu" method="_on_Peasent_on_update_stats"]
+[connection signal="on_change" from="Editor" to="Navigation/Control/ContextMenu" method="_on_Editor_on_change"]

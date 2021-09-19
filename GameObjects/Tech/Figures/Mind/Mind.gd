@@ -5,6 +5,7 @@ onready var status = $Status
 signal new_target
 
 var tolerance = 50
+
 var plan_map = {
 	"eating": null,
 	"sleeping": null,
@@ -12,8 +13,20 @@ var plan_map = {
 	"wandering": null
 }
 
+onready var navigation: Navigation2D = get_tree().get_root().find_node("Navigation", true, false)
+
 func _drink():
-	pass
+	var type = "drinking"
+	if plan_map[type] == true:
+		var drinks = FoodDb.get_registered_drinks()
+		var closest_drink = navigation.get_closest_item(drinks, self.position)
+		if closest_drink != null:
+			var pos = closest_drink.position
+			_set_target(type, pos)
+		else: 
+			print("cannot find a drink!")
+	else:
+		_check_reach_target_process(type)
 	
 func _eat():
 	pass
@@ -21,29 +34,39 @@ func _eat():
 func _sleep():
 	pass
 
-var walking_watchdog = 0
-func _wander():
-	if plan_map["wandering"] == null:
-		var pos = MapManager.get_random_position_near_to(global_position, 180)
-		plan_map["wandering"] = {
-			"target_pos": pos
-		}
-		emit_signal("new_target", pos)
+func _set_target(type, pos):
+	plan_map[type] = {
+		"target_pos": pos,
+		"watchdog": 10,
+	}
+	emit_signal("new_target", pos)
+
+var last_pos
+func _check_reach_target_process(type):
+	var target_pos = plan_map[type]["target_pos"]
+	var watchdog = plan_map[type]["watchdog"]
+	if (global_position.x == target_pos.x && global_position.y == target_pos.y) || watchdog > 10:
+		plan_map[type] = null
+		last_pos = null
 	else:
-		var target_pos = plan_map["wandering"]["target_pos"]
-		if (global_position.x == target_pos.x && global_position.y == target_pos.y) || walking_watchdog > 10:
-			plan_map["wandering"] = null
-			walking_watchdog = 0
-		else:
-			print("my pos", global_position, target_pos)
-			walking_watchdog += 1
+		last_pos = global_position
+		if (last_pos.x == global_position.x && last_pos.y == global_position.y):
+			plan_map[type]["watchdog"] += 1
+
+func _wander():
+	var type = "wandering"
+	if plan_map[type] == null:
+		var pos = MapManager.get_random_position_near_to(global_position, 180)
+		_set_target(type, pos)
+	else:
+		_check_reach_target_process(type)
 
 func _ready():
 	status.hide_all()
 
 func _execute_plans():
 	var drink_plan = plan_map["drinking"]
-	var eat_plan = plan_map["eating"]	
+	var eat_plan = plan_map["eating"]
 	var sleep_plan = plan_map["sleeping"]
 	var wandering_plan = plan_map["wandering"]
 	

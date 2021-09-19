@@ -1,7 +1,5 @@
 extends Node2D
 
-onready var character_select_box = $CharacterSelectBox
-onready var area = $Area2D
 onready var animation_player = $KinematicBody2D/AnimationPlayer
 onready var movable = $Movable
 onready var selectable = $Selectable
@@ -51,8 +49,8 @@ func _update_state():
 var update_interval = 1
 
 func _update_needs(delta):
-	self.info["stats"]["hunger"] -= (delta * 3)
-	self.info["stats"]["thurst"] -= (delta / 10 )
+	self.info["stats"]["hunger"] -= (delta / 30)
+	self.info["stats"]["thurst"] -= (delta * 10 )
 	self.info["stats"]["energy"] -= (delta / 90 )
 	if update_interval <= 0:
 		emit_signal("on_update_stats", info)
